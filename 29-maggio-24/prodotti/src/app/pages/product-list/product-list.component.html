@@ -1,0 +1,22 @@
+<table class="table">
+  <tr>
+    <th>#</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Category</th>
+    <th>Price</th>
+    <th>Favorites</th>
+  </tr>
+  <tr *ngFor="let product of products">
+    <td>{{ product.id }}</td>
+    <td>{{ product.title }}</td>
+    <td>{{ product.description }}</td>
+    <td>{{ product.category }}</td>
+    <td>{{ product.price }}</td>
+    <td>
+      <button (click)="toggleFavorite(product)">
+        {{ isFavorite(product) ? "Remove" : "Add" }}
+      </button>
+    </td>
+  </tr>
+</table>

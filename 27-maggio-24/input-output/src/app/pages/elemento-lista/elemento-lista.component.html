@@ -1,0 +1,71 @@
+<div>
+  <h2>Tags</h2>
+  <div>
+    <button
+      *ngFor="let tag of allTags"
+      (click)="filterPosts(tag)"
+      [ngClass]="{
+        'btn-primary': tag === selectedTag,
+        'btn-secondary': tag !== selectedTag
+      }"
+      class="btn m-1"
+    >
+      {{ tag | uppercase }}
+    </button>
+    <button
+      *ngIf="selectedTag"
+      (click)="clearFilter()"
+      class="btn btn-warning m-1"
+    >
+      Clear Filter
+    </button>
+  </div>
+
+  <div
+    *ngFor="let post of posts"
+    class="card m-3"
+    [ngClass]="{ 'bg-primary': post.active }"
+  >
+    <div class="card-body">
+      <h5 class="card-title">{{ post.title | uppercase }}</h5>
+      <p class="card-text">{{ post.body }}</p>
+      <p class="card-text">
+        <span class="mx-1" *ngFor="let tag of post.tags" appRandomBgColor>{{
+          tag | uppercase
+        }}</span>
+      </p>
+      <button class="btn btn-secondary" (click)="inviaPost(post)">
+        {{ post.active ? "Disponibile" : "Non disponibile" }}
+      </button>
+      <button class="btn btn-secondary" (click)="toggleForm()">
+        {{ showForm ? "Nascondi Modulo" : "Mostra Modulo" }}
+      </button>
+      <ng-content></ng-content>
+      <div *ngIf="showForm">
+        <form (ngSubmit)="updatePost()">
+          <div class="mb-3">
+            <label for="postTitle" class="form-label">Titolo</label>
+            <input
+              type="text"
+              class="form-control"
+              id="postTitle"
+              [(ngModel)]="post.title"
+              name="title"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="postBody" class="form-label">Contenuto</label>
+            <textarea
+              class="form-control"
+              id="postBody"
+              rows="3"
+              [(ngModel)]="post.body"
+              name="body"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Salva</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
